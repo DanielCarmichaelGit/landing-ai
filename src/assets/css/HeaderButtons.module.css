@@ -1,0 +1,127 @@
+.HeaderButtons {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20px);
+  height: fit-content;
+  background-color: #333;
+  color: wheat;
+  padding: 10px;
+  border-radius: 5px;
+  row-gap: 10px;
+}
+
+.CreateHeaderButton {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  background-color: wheat;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.CreateHeaderButton:focus {
+  outline: none;
+}
+
+.HeaderButtonsLabel {
+  font-size: small;
+  color: #f1f1f1;
+  text-align: left;
+}
+
+.HeaderButtonsGroup {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  width: 100%;
+}
+
+.HeaderButtonGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  justify-content: space-between;
+  row-gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid wheat;
+}
+
+.HeaderButton {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  justify-content: space-between;
+}
+
+.ButtonInput {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: wheat;
+  color: #333;
+  max-height: 20px;
+  outline: none;
+  border: none;
+}
+
+.ButtonInput:focus {
+  outline: none;
+}
+
+.ButtonDropdown {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: wheat;
+  color: #333;
+  height: 40px;
+  border: none;
+}
+
+.ButtonDropdown:focus {
+  outline: none;
+}
+
+.DropdownOptionInputs {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 10px;
+}
+
+.DropdownOptions {
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: white;
+  padding: 10px;
+  justify-content: start;
+  align-items: start;
+  row-gap: 10px;
+}
+
+.OptionTextInput {
+  width: 50%;
+  background-color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.OptionTextInput:focus {
+  outline: none;
+}
+
+.OptionCopyInput {
+  width: 50%;
+  background-color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.OptionCopyInput:focus {
+  outline: none;
+}

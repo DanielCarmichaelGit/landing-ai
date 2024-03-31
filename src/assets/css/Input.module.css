@@ -1,0 +1,44 @@
+.PromptInput {
+  background-color: #333;
+  color: wheat;
+  padding: 10px;
+  border-radius: 5px;
+  width: calc(100% - 20px);
+  height: fit-content;
+  font-size: large;
+  border: none;
+}
+
+.PromptInputArea {
+  background-color: #333;
+  color: wheat;
+  padding: 10px;
+  border-radius: 5px;
+  min-width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  height: fit-content;
+  font-size: large;
+  border: none;
+  min-height: 21px;
+}
+
+.PromptInput:focus {
+  outline: none;
+}
+
+.PromptInputArea:focus {
+  outline: none;
+}
+
+.PromptLabel {
+  font-size: small;
+  color: #f1f1f1;
+  text-align: left;
+}
+
+.PromptInputGroup {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  width: 100%;
+}

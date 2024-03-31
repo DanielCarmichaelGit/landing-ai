@@ -1,0 +1,50 @@
+.ColorPickerGroup {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20px);
+  padding: 10px;
+  height: fit-content;
+  background-color: #333;
+  border-radius: 5px;
+  row-gap: 10px;
+}
+
+.DarkModeButton {
+  padding: 10px;
+  min-width: 150px;
+  border-radius: 5px;
+  background-color: #333;
+  color: wheat;
+}
+
+.LightModeButton {
+  padding: 10px;
+  min-width: 150px;
+  border-radius: 5px;
+  background-color: wheat;
+  color: #333;
+}
+
+.ColorPickers {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  column-gap: 10px;
+  overflow-x: scroll;
+  height: fit-content;
+}
+
+.DarkModeButton:focus {
+  outline: none;
+}
+
+.LightModeButton:focus {
+  outline: none;
+}
+
+.ModeSelector {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
