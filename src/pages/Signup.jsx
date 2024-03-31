@@ -25,7 +25,7 @@ export default function Signup({ setUser }) {
                 const response = await fetchWrapper(endpoint, '', 'POST', body);
                 if (response && response.user) {
                     console.log('response', response);
-                    setUser(response.user);
+                    setUser({ ...response.user, token: response.token });
                 } else {
                     setErrors({ email: 'Email is already taken' });
                 }

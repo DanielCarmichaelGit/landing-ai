@@ -18,7 +18,7 @@ function App() {
     }
   }, [user])
 
-  if (!user) {
+  if (!user || !user.token) {
     return <Login setUser={setUser} />//<Signup setUser={setUser} />
   }
 
