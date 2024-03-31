@@ -6,7 +6,6 @@
  * @param {object} payload
  * @returns
  */
-
 const fetchWrapper = async (path, token, method, payload) => {
   const baseUrl = `https://grav-labs-5d2f91941bbb.herokuapp.com`;
   let url = new URL(baseUrl + path);
@@ -40,26 +39,29 @@ const fetchWrapper = async (path, token, method, payload) => {
       throw new Error('Response not OK');
     }
 
-    // Create a ReadableStream from the response body
-    const reader = response.body.getReader();
+    if (response.headers.get('content-type')?.includes('stream')) {
+      // Create a ReadableStream from the response body
+      const reader = response.body.getReader();
 
-    // Create a function to process the stream
-    const processStream = async (onChunk) => {
-      let result = '';
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = new TextDecoder("utf-8").decode(value);
-        result += chunk;
-        onChunk(chunk); // Call the onChunk callback with each chunk of data
-      }
-      return result;
-    };
+      // Create a function to process the stream
+      const processStream = async (onChunk) => {
+        let result = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = new TextDecoder("utf-8").decode(value);
+          result += chunk;
+          onChunk(chunk); // Call the onChunk callback with each chunk of data
+        }
+        return result;
+      };
 
-    // Return an object with the processStream function
-    return {
-      processStream,
-    };
+      // Return an object with the processStream function
+      return { processStream };
+    } else {
+      // Return the parsed JSON response
+      return await response.json();
+    }
   } catch (error) {
     console.error("Fetch error:", error);
     throw error;
