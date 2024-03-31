@@ -105,6 +105,7 @@
 .OptionTextInput {
   width: 50%;
   background-color: #333;
+  color: #f1f1f1;
   border: none;
   padding: 10px;
   border-radius: 5px;
@@ -117,6 +118,7 @@
 .OptionCopyInput {
   width: 50%;
   background-color: #333;
+  color: #f1f1f1;
   border: none;
   padding: 10px;
   border-radius: 5px;

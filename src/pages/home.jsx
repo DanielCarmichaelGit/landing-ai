@@ -58,6 +58,8 @@ export default function Home() {
       ],
     },
   ]);
+  const [historyId, setHistoryId] = useState('');
+  // if (historyId) console.log('historyId: ', historyId);
 
   useEffect(() => {
     console.log(headerButtons);
@@ -91,30 +93,38 @@ export default function Home() {
   const handleStreamedInput = async () => {
     try {
       // Send the streamed input to the server for processing
+      console.log('historyId: ', historyId.trim());
       const payload = {
         prompt: streamedInput,
         html: response,
         initialPrompt,
+        history_id: historyId.trim(),
       };
 
       //setIsLoading(true);
       setStreamedInput(""); // Clear the streamed input field
       setResponse(" ");
+      const token = JSON.parse(localStorage.getItem("user"))?.token || "";
 
       const { processStream } = await fetchWrapper(
         "/anthropic/modify-html/stream",
-        "",
+        token,
         "POST",
         { ...payload }
       );
 
       processStream((chunk) => {
         // Remove the "data: " tags and unnecessary whitespace from the chunk
-        const cleanedChunk = removeDataTags(chunk);
-        console.log(chunk);
-
-        // Update the response state with the modified HTML
-        setResponse((prevResponse) => prevResponse + chunk);
+        // const cleanedChunk = removeDataTags(chunk);
+        // console.log(chunk);
+        if (chunk.includes("data:")) {
+          const cleanedChunk = chunk.split("data:")[1];
+          const parsedChunk = JSON.parse(cleanedChunk);
+          setHistoryId(parsedChunk.history_id);
+        } else {
+          // Update the response state by appending the cleaned chunk to the existing response
+          setResponse((prevResponse) => prevResponse + chunk);
+        }
       });
     } catch (error) {
       console.error("Error:", error);
@@ -133,7 +143,7 @@ export default function Home() {
 
   function removeDataTags(text) {
     return text
-      .replace(/data: /g, "")
+      // .replace(/data: /g, "")
       .replace(/\s*(\W)/g, "$1")
       .replace(/(\W)\s*/g, "$1")
       .replace(/\s+/g, " ")
@@ -146,6 +156,7 @@ export default function Home() {
     console.log("yes");
 
     try {
+      const token = JSON.parse(localStorage.getItem("user"))?.token || "";
       const payload = {
         prompt: {
           website_title: companyName,
@@ -172,18 +183,20 @@ export default function Home() {
 
       const { processStream } = await fetchWrapper(
         "/anthropic/landing-page/stream",
-        "",
+        token,
         "POST",
         { ...payload }
       );
 
       processStream((chunk) => {
-        // Remove the "data: " tags and unnecessary whitespace from the chunk
-        const cleanedChunk = removeDataTags(chunk);
-        console.log(chunk);
-
-        // Update the response state by appending the cleaned chunk to the existing response
-        setResponse((prevResponse) => prevResponse + chunk);
+        if (chunk.includes("data:")) {
+          const cleanedChunk = chunk.split("data:")[1];
+          const parsedChunk = JSON.parse(cleanedChunk);
+          setHistoryId(parsedChunk.history_id);
+        } else {
+          // Update the response state by appending the cleaned chunk to the existing response
+          setResponse((prevResponse) => prevResponse + chunk);
+        }
       });
     } catch (error) {
       console.error("Error:", error);

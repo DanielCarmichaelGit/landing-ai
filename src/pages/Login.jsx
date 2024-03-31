@@ -15,7 +15,7 @@ export default function Login({ setUser }) {
             try {
                 const response = await fetchWrapper(endpoint, '', 'POST', body);
                 if (response && response.user) {
-                    setUser(response.user);
+                    setUser({ ...response.user, token: response.token });
                 } else {
                     setErrors({ email: 'Invalid email or password' });
                 }
