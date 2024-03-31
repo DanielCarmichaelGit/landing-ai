@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import styles from "../../assets/css/LogoUploader.module.css";
 import fetchWrapper from "../../../utils/fetchWrapper";
 
