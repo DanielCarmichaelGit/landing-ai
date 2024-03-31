@@ -4,7 +4,6 @@ import ColorPickerGroup from "../components/features/ColorPicker";
 import LogoUploader from "../components/features/LogoUploader";
 import Response from "../components/features/Response";
 import PromptInput from "../components/reusable/Input";
-import Anthropic from "@anthropic-ai/sdk";
 import HeaderButtons from "../components/features/HeaderButtons";
 
 import fetchWrapper from "../../utils/fetchWrapper";
@@ -18,8 +17,6 @@ export default function Home() {
   const [copy, setCopy] = useState(
     "Kamari teams is a time tracking, task management, and invoicing tool, designed for freelancers. Freelancers can invite clients, track time against tasks, send invoices for hours worked, and clients can closely manage their product pipeline via task management. Kamari teams partners with stripe to bring invoicing to every freelancer. Kamari teams takes no portion of the money earned... no platform fees ever! Get started for free with no credit card required. Don't like it? No commitment."
   );
-
-  //test
   const [streamedInput, setStreamedInput] = useState("");
   const [response, setResponse] = useState("");
   const [primaryColor, setPrimaryColor] = useState("#000000");
