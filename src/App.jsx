@@ -1,12 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Home from './pages/home'
 import LandingPage from './pages/landingpage'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.clear();
+    }
+  }, [user])
+
+  if (!user) {
+    return <Login setUser={setUser} />//<Signup setUser={setUser} />
+  }
 
   return (
     <Home />
