@@ -9,12 +9,6 @@ import HeaderButtons from "../components/features/HeaderButtons";
 
 import fetchWrapper from "../../utils/fetchWrapper";
 import CodeRenderer from "../components/reusable/CodeRenderer";
-//test
-const anthropic = new Anthropic({
-  apiUrl: "https://cors-anywhere.herokuapp.com/https://api.anthropic.com/v1",
-  apiKey:
-    "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",
-});
 
 export default function Home() {
   const [selectedMode, setSelectedMode] = useState("dark");
