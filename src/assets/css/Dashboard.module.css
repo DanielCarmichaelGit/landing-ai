@@ -1,0 +1,64 @@
+.Dashboard {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.ThreadsContainer {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.Threads {
+  display: flex;
+  flex-wrap: wrap;
+  height: fit-content;
+  padding: 10px 0px;
+  width: 100%;
+  gap: 10px;
+}
+
+.Thread {
+  height: 200px;
+  width: 400px;
+}
+
+.PagesContainer {
+  width: calc(100% - 20px);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.Pages {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  height: fit-content;
+  padding: 10px 0px;
+  width: 100%;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+.Page {
+  height: 600px;
+  width: calc(30%);
+  overflow-y: scroll;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #f1f1f136;
+}
+
+.FadeOut {
+  opacity: 0;
+}
+
+.FadeIn {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}

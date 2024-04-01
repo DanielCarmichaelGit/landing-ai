@@ -1,5 +1,7 @@
 import styles from "../../assets/css/HeaderButtons.module.css";
 
+import LogoUploader from "./LogoUploader";
+
 export default function HeaderButtons({ headerButtons, createHeaderButton, updateHeaderButton }) {
   const handleButtonTypeChange = (index, type) => {
     updateHeaderButton(index, { type, options: [] });
@@ -17,8 +19,14 @@ export default function HeaderButtons({ headerButtons, createHeaderButton, updat
     updateHeaderButton(buttonIndex, { options: updatedOptions });
   };
 
+  const handleOptionImageChange = (buttonIndex, optionIndex, url) => {
+    const updatedOptions = [...headerButtons[buttonIndex].options];
+    updatedOptions[optionIndex] = { ...updatedOptions[optionIndex], url };
+    updateHeaderButton(buttonIndex, { options: updatedOptions });
+  };
+
   const addOption = (buttonIndex) => {
-    const updatedOptions = [...headerButtons[buttonIndex].options, { text: "", copy: "" }];
+    const updatedOptions = [...headerButtons[buttonIndex].options, { text: "", copy: "", image: "" }];
     updateHeaderButton(buttonIndex, { options: updatedOptions });
   };
 
@@ -66,6 +74,7 @@ export default function HeaderButtons({ headerButtons, createHeaderButton, updat
                         value={option.copy}
                         onChange={(e) => handleOptionCopyChange(index, optionIndex, e.target.value)}
                       />
+                      <LogoUploader arrayLength={1} index_={index} optionIndex={optionIndex} handleOptionImageChange={handleOptionImageChange}/>
                     </div>
                   ))}
                   <button onClick={() => addOption(index)}>Add Option</button>

@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import styles from "../../assets/css/LogoUploader.module.css";
 
-export default function LogoUploader({
-  index_,
-  optionIndex,
-  handleOptionImageChange,
-  arrayLength,
-  setPropImageUrls,
-  propImageUrls,
-}) {
+export default function ImageUploader({ setLogoImageUrl }) {
   const [previews, setPreviews] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
 
@@ -48,16 +41,12 @@ export default function LogoUploader({
         console.log(response);
 
         if (response.ok) {
+          setPreviews([]);
+          setImageUrls([]);
           const data = await response.json();
           console.log(data);
           const { imageUrl } = data;
-          if (index_ !== undefined && optionIndex !== undefined) {
-            handleOptionImageChange(index_, optionIndex, imageUrl);
-          } else {
-            const updatedImageUrls = [...propImageUrls];
-            updatedImageUrls[index] = imageUrl;
-            setPropImageUrls(updatedImageUrls);
-          }
+          setLogoImageUrl(imageUrl);
         } else {
           console.error("Error uploading image:", response.statusText);
         }
@@ -77,11 +66,9 @@ export default function LogoUploader({
 
   return (
     <div className={styles.LogoUploader}>
-      <p className={styles.ResponseHeader}>
-        Upload up to six images (first image is logo)
-      </p>
+      <p className={styles.ResponseHeader}>Upload a logo image</p>
       <div className={styles.LogoUploaderGroup}>
-        {[...Array(arrayLength)].map((_, index) => (
+        {[...Array(1)].map((_, index) => (
           <div key={index} className={styles.ImagePreviewContainer}>
             {previews[index] ? (
               <img

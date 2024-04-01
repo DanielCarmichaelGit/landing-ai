@@ -1,33 +1,53 @@
 import React, { useEffect, useState } from "react";
 import styles from "../assets/css/Home.module.css";
 import ColorPickerGroup from "../components/features/ColorPicker";
-import LogoUploader from "../components/features/LogoUploader";
-import Response from "../components/features/Response";
 import PromptInput from "../components/reusable/Input";
 import HeaderButtons from "../components/features/HeaderButtons";
 
 import fetchWrapper from "../../utils/fetchWrapper";
 import CodeRenderer from "../components/reusable/CodeRenderer";
+import LogoUploader from "../components/features/LogoUploader";
+import ImageUploader from "../components/features/ImageUploader";
+
+import Response from "../components/features/Response";
 
 export default function Home() {
   const [selectedMode, setSelectedMode] = useState("dark");
   const [industry, setIndustry] = useState(
-    "Freelancer tech, Client Management, Task Management, Invoicing"
+    "AI Generated Landing Pages, AI, AI Web Development, No Code"
   );
-  const [copy, setCopy] = useState(
-    "Kamari teams is a time tracking, task management, and invoicing tool, designed for freelancers. Freelancers can invite clients, track time against tasks, send invoices for hours worked, and clients can closely manage their product pipeline via task management. Kamari teams partners with stripe to bring invoicing to every freelancer. Kamari teams takes no portion of the money earned... no platform fees ever! Get started for free with no credit card required. Don't like it? No commitment."
-  );
+  const [copy, setCopy] =
+    useState(`Introducing LandingAI: Your AI-Powered Landing Page Generator
+
+  Revolutionize your online presence with LandingAI, the cutting-edge solution for creating captivating, high-converting landing pages effortlessly. Our AI-driven platform empowers businesses of all sizes to craft stunning, prompt-centric landing pages that engage visitors and drive results.
+  
+  With LandingAI, you can:
+  
+  Harness the Power of AI: Our advanced AI algorithms analyze your business, audience, and goals to generate optimized landing page designs and content tailored to your unique needs.
+  Create Pages in Minutes: Say goodbye to lengthy design processes and coding. Simply provide a few prompts, and LandingAI will generate a fully functional, responsive landing page in a matter of minutes.
+  Customize with Ease: While our AI takes care of the heavy lifting, you maintain full control over your landing page. Easily customize layouts, colors, images, and content to align with your brand and vision.
+  Optimize for Conversions: LandingAI leverages data-driven insights and best practices to create landing pages optimized for conversions. From compelling headlines to strategically placed call-to-actions, every element is designed to guide visitors towards your desired action.
+  Integrate Seamlessly: Our platform integrates smoothly with your existing marketing stack, allowing you to track performance, conduct A/B tests, and make data-informed decisions to continually improve your landing pages.
+  Whether you're a startup looking to make a strong first impression or an established business seeking to enhance your online presence, LandingAI is your go-to solution for AI-powered landing page generation. Join the future of landing page creation and unlock the potential of prompt-centric, AI-driven design.
+  
+  Try LandingAI today and experience the difference AI can make for your business's online success.
+  `);
+
+
   const [streamedInput, setStreamedInput] = useState("");
   const [response, setResponse] = useState("");
   const [primaryColor, setPrimaryColor] = useState("#000000");
   const [secondaryColor, setSecondaryColor] = useState("#000000");
   const [tertiaryColor, setTertiaryColor] = useState("#000000");
   const [isLoading, setIsLoading] = useState(false);
-  const [companyName, setCompanyName] = useState("Kamari");
+  const [companyName, setCompanyName] = useState("Landing Ai");
   const [additional, setAdditional] = useState("");
   const [initialPrompt, setInitialPrompt] = useState({});
   const [initialResponse, setInitialResponse] = useState("");
   const [errorOccured, setErrorOccured] = useState(false);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [logoImageUrl, setLogoImageUrl] = useState("");
+  const [streamInputImageUrl, setStreamInputImageUrl] = useState("");
   const [headerButtons, setHeaderButtons] = useState([
     {
       type: "Select",
@@ -44,26 +64,30 @@ export default function Home() {
       text: "Features",
       options: [
         {
-          text: "Client Management",
+          text: "Iteration",
           copy: "",
+          image: "",
         },
         {
-          text: "Task Management",
+          text: "Prompt to UI",
           copy: "",
+          image: "",
         },
         {
-          text: "Invoicing",
+          text: "No Code",
           copy: "",
+          image: "",
         },
       ],
     },
   ]);
-  const [historyId, setHistoryId] = useState('');
+  const [historyId, setHistoryId] = useState("");
   // if (historyId) console.log('historyId: ', historyId);
 
   useEffect(() => {
     console.log(headerButtons);
-  }, [headerButtons]);
+    console.log(logoImageUrl)
+  }, [headerButtons, logoImageUrl]);
 
   const handlePrimaryColorChange = (newColor) => {
     setPrimaryColor(newColor.hex);
@@ -93,9 +117,9 @@ export default function Home() {
   const handleStreamedInput = async () => {
     try {
       // Send the streamed input to the server for processing
-      console.log('historyId: ', historyId.trim());
+      console.log("historyId: ", historyId.trim());
       const payload = {
-        prompt: streamedInput,
+        prompt: streamedInput + `RAG Resource Image: ${streamInputImageUrl}`,
         html: response,
         initialPrompt,
         history_id: historyId.trim(),
@@ -121,6 +145,7 @@ export default function Home() {
           const cleanedChunk = chunk.split("data:")[1];
           const parsedChunk = JSON.parse(cleanedChunk);
           setHistoryId(parsedChunk.history_id);
+          setStreamInputImageUrl("")
         } else {
           // Update the response state by appending the cleaned chunk to the existing response
           setResponse((prevResponse) => prevResponse + chunk);
@@ -141,15 +166,6 @@ export default function Home() {
     setHeaderButtons(updatedButtons);
   };
 
-  function removeDataTags(text) {
-    return text
-      // .replace(/data: /g, "")
-      .replace(/\s*(\W)/g, "$1")
-      .replace(/(\W)\s*/g, "$1")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -157,6 +173,7 @@ export default function Home() {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token || "";
+      console.log(headerButtons)
       const payload = {
         prompt: {
           website_title: companyName,
@@ -171,7 +188,8 @@ export default function Home() {
           staggered: true,
           alignment: "left",
           features: { ...headerButtons },
-          // additionalSections: additional,
+          logo: logoImageUrl,
+          additionalSections: additional,
         },
       };
 
@@ -207,9 +225,9 @@ export default function Home() {
 
   useEffect(() => {
     if (errorOccured && initialResponse.length > 0) {
-      setResponse(initialResponse)
+      setResponse(initialResponse);
     }
-  }, [errorOccured, initialResponse])
+  }, [errorOccured, initialResponse]);
 
   return (
     <div className={styles.Home}>
@@ -242,12 +260,13 @@ export default function Home() {
                 textValue={additional}
                 handleTextChange={(e) => setAdditional(e.target.value)}
               />
+              <ImageUploader setLogoImageUrl={setLogoImageUrl}/>
               <HeaderButtons
                 headerButtons={headerButtons}
                 createHeaderButton={createHeaderButton}
                 updateHeaderButton={updateHeaderButton}
               />
-              <LogoUploader />
+              <LogoUploader arrayLength={3} propImageUrls={imageUrls} setPropImageUrls={setImageUrls}/>
               <ColorPickerGroup
                 primary={primaryColor}
                 secondary={secondaryColor}
@@ -267,12 +286,12 @@ export default function Home() {
                 onChange={(e) => setStreamedInput(e.target.value)}
                 placeholder="Enter your modifications here..."
               />
+              <ImageUploader setLogoImageUrl={setStreamInputImageUrl}/>
               <button onClick={handleStreamedInput}>Modify</button>
+              <Response response={response} />
             </div>
           )}
-          {response === "" ? (
-            null
-          ) : (
+          {response === "" ? null : (
             <div className={styles.LandingPage}>
               <CodeRenderer code={response} />
             </div>
