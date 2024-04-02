@@ -6,9 +6,9 @@ export default function PromptInput({label, type = "text", handleTextChange, tex
       <label className={styles.PromptLabel}>{label}</label>
       {
         type !== "text-area" ? (
-          <input onChange={handleTextChange} value={textValue} className={styles.PromptInput} type={type} />
+          <input onChange={(e) => handleTextChange(e.target.value)} value={textValue} className={styles.PromptInput} type={type} />
         ) : (
-          <textarea onChange={handleTextChange} value={textValue} className={styles.PromptInputArea} rows="4"></textarea>
+          <textarea onChange={(e) => handleTextChange(e.target.value)} value={textValue} className={styles.PromptInputArea} rows="4"></textarea>
         )
       }
     </div>

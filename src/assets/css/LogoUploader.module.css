@@ -1,20 +1,19 @@
 .LogoUploader {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 10px;
-  width: 100%;
+  width: calc(100% - 20px);
   height: fit-content;
-  background-color: #333;
   border-radius: 5px;
   font-size: large;
-  color: wheat;
-  row-gap: 10px;
+  color: white;
+  column-gap: 10px;
+  overflow: hidden;
 }
 
 .LogoUploaderGroup {
   display: flex;
   flex-direction: row;
-  max-width: 100%;
   height: fit-content;
   flex-wrap: wrap;
   column-gap: 10px;
@@ -33,9 +32,8 @@
   width: 200px;
   height: 200px;
   border-radius: 5px;
-  background-color: wheat;
+  background-color: rgb(184, 77, 255);
   border: 1px solid transparent !important;
-  color: #333;
   outline: none;
   display: flex;
   flex-direction: column;
