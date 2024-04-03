@@ -4,7 +4,7 @@ import PromptInput from "../reusable/Input";
 import { useDispatch } from 'react-redux';
 import { addBrandImage } from "../../State-Management/actions";
 
-export default function ImageUploader({withInput = false, inputPlaceholder = ""}) {
+export default function ImageUploader({withInput = false, inputPlaceholder = "", isLogo = false, setLogo}) {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
 
@@ -39,6 +39,11 @@ export default function ImageUploader({withInput = false, inputPlaceholder = ""}
           console.log(data);
           const { imageUrl, image } = data;
           dispatch(addBrandImage(image));
+
+          if (isLogo) {
+            setLogo(imageUrl)
+          }
+
           handleInputChange("")
           console.log("Image uploaded successfully. URL:", imageUrl);
           // Perform any necessary actions with the image URL

@@ -141,6 +141,8 @@ export default function Profile() {
             <PromptInput handleTextChange={handleBrandNameChange} label={"Brand Name"}/>
             <PromptInput handleTextChange={handleBrandIndustryChange} label={"Industry"}/>
             <PromptInput handleTextChange={handleBrandCopyChange} type="text-area" label={"Copy"}/>
+            <img style={{height: "150px", width: "150px"}} src={logoImageUrl} alt=""/>
+            <ImageUploader isLogo={true} setLogo={setLogoImageUrl}/>
             <ColorPickerGroup primary={primary} secondary={secondary} tertiary={tertiary}
               setPrimary={handlePrimaryColorChange}
               setSecondary={handleSecondaryColorChange}

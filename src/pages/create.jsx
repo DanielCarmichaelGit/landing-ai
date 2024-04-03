@@ -149,6 +149,7 @@ export default function Create() {
         const payload = {
           prompt: {
             website_title: user.brand_name,
+            brand_logo: user.brand_logo_url,
             theme: user.brand_mode,
             colors: user.brand_colors,
             industry: user.brand_industry,
