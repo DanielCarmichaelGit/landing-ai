@@ -1,0 +1,103 @@
+.GeneratorContainer {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.GeneratorHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: fit-content;
+  align-items: end;
+}
+
+.GeneratorHeaderRight {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  height: fit-content;
+}
+
+.GeneratorHeaderLeft {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  height: fit-content;
+  column-gap: 10px;
+  align-items: end;
+}
+
+.GeneratorHeaderrOptionsButton {
+  height: 41px;
+  width: fit-content;
+  background-color: #333;
+  color: white;
+}
+
+.Generator {
+  height: 100%;
+  width: 100%;
+}
+
+.UpdateOptionModalContainer {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000aa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.UpdateOptionModal {
+  position: absolute;
+  width: 60%;
+  height: 75%;
+  overflow-y: scroll;
+  background-color: #333;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 15px;
+}
+
+.BrandImages {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 10px;
+}
+
+.BrandImage {
+  height: 150px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  padding: 10px;
+}
+
+.BrandImage:hover {
+  cursor: pointer;
+}
+
+.GenerationIcon {
+  font-size: 35px !important;
+  padding: 5px;
+  background-color: #535bf2;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+
+.GenerationIcon:hover {
+  box-shadow: 0px 0px 10px #f1f1f135;
+  transition: 0.2s;
+}

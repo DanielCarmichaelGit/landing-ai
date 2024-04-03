@@ -114,49 +114,6 @@ export default function Home() {
     ]);
   }
 
-  const handleStreamedInput = async () => {
-    try {
-      // Send the streamed input to the server for processing
-      console.log("historyId: ", historyId.trim());
-      const payload = {
-        prompt: streamedInput + `RAG Resource Image: ${streamInputImageUrl}`,
-        html: response,
-        initialPrompt,
-        history_id: historyId.trim(),
-      };
-
-      //setIsLoading(true);
-      setStreamedInput(""); // Clear the streamed input field
-      setResponse(" ");
-      const token = JSON.parse(localStorage.getItem("user"))?.token || "";
-
-      const { processStream } = await fetchWrapper(
-        "/anthropic/modify-html/stream",
-        token,
-        "POST",
-        { ...payload }
-      );
-
-      processStream((chunk) => {
-        // Remove the "data: " tags and unnecessary whitespace from the chunk
-        // const cleanedChunk = removeDataTags(chunk);
-        // console.log(chunk);
-        if (chunk.includes("data:")) {
-          const cleanedChunk = chunk.split("data:")[1];
-          const parsedChunk = JSON.parse(cleanedChunk);
-          setHistoryId(parsedChunk.history_id);
-          setStreamInputImageUrl("")
-        } else {
-          // Update the response state by appending the cleaned chunk to the existing response
-          setResponse((prevResponse) => prevResponse + chunk);
-        }
-      });
-    } catch (error) {
-      console.error("Error:", error);
-      setIsLoading(false);
-    }
-  };
-
   const updateHeaderButton = (index, updatedProps) => {
     const updatedButtons = [...headerButtons];
     updatedButtons[index] = {

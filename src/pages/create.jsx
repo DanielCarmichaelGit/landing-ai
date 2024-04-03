@@ -7,14 +7,14 @@ import fetchWrapper from "../../utils/fetchWrapper";
 
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import SailingIcon from "@mui/icons-material/Sailing";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
+
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../State-Management/actions";
-import CodeRenderer from "../components/reusable/CodeRenderer";
-import GeneratedCodeContainerHTML from "../components/reusable/HTMLRenderer";
+
+import ConfigStep from "../components/reusable/Creator/Steps/config";
+import Generator from "../components/reusable/Creator/Steps/generator";
+import BuildOptions from "../components/reusable/Creator/Steps/buildOptions";
 
 export default function Create() {
   const dispatch = useDispatch();
@@ -27,41 +27,35 @@ export default function Create() {
   const [pricingCollapsed, setPricingCollapsed] = useState(true);
   const [response, setResponse] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [reprompt, setReprompt] = useState("");
+  const [retry, setRetry] = useState(false);
   const [initialPrompt, setInitialPrompt] = useState("");
   const [errorOccured, setErrorOccured] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
+  
+  // configs for subsequent requests
+  const [historyId, setHistoryId] = useState("");
+  const [pageId, setPageId] = useState("");
 
-  const config_options = {
-    "Landing Page": {
-      prompt: true,
-      trained: true,
-      hosting: true,
-      retrieve_code: true,
-      costs: {
-        generation: 500,
-        hosting: 500,
-        iterations: 25,
-        additional_iterations: {
-          package: {
-            count: 50,
-            price: 200,
-          },
-        },
-        restrictions: false,
-      },
-    },
-  };
+  useEffect(() => {
+    console.log(selectedImages)
+  }, [selectedImages])
 
   const handleOptionClick = (selectedMode) => {
     setStep(1);
     setMode(selectedMode);
   };
 
+  function handlePromptChange(value) {
+    setReprompt(value);
+  }
+
   useEffect(() => {
     if (step === 3 && !isGenerating) {
       setIsGenerating(true);
       handleSubmit();
     }
-  }, [step])
+  }, [step]);
 
   useEffect(() => {
     if (mode !== null) {
@@ -70,10 +64,33 @@ export default function Create() {
   }, [mode]);
 
   useEffect(() => {
+    if (retry) {
+      handleStreamedInput();
+      setRetry(false);
+    }
+  }, [retry])
+
+  useEffect(() => {
     if (!user) {
       dispatch(getUser());
     }
   }, [user]);
+
+  function handleImageSelect(image) {
+    const isSelected = selectedImages.some(
+      (selectedImage) => selectedImage.image_id === image.image_id
+    );
+  
+    if (isSelected) {
+      setSelectedImages(
+        selectedImages.filter(
+          (selectedImage) => selectedImage.image_id !== image.image_id
+        )
+      );
+    } else {
+      setSelectedImages([...selectedImages, image]);
+    }
+  }
 
   function handleCreateOptionSelect(option) {
     setCreateOption(option);
@@ -82,6 +99,48 @@ export default function Create() {
   function handlePricingToggle() {
     setPricingCollapsed(!pricingCollapsed);
   }
+
+  const handleStreamedInput = async () => {
+    try {
+      // Send the streamed input to the server for processing
+      console.log("historyId: ", historyId.trim());
+      const payload = {
+        prompt: reprompt + `RAG Resource Images: ${selectedImages.map((image) => image.hosted_url)}`,
+        html: response,
+        initialPrompt,
+        history_id: historyId,
+        page_id: pageId
+      };
+
+      setReprompt(""); // Clear the streamed input field
+      setResponse("");
+      const token = JSON.parse(localStorage.getItem("user"))?.token || "";
+
+      const { processStream } = await fetchWrapper(
+        "/anthropic/modify-html/stream",
+        token,
+        "POST",
+        { ...payload }
+      );
+
+      processStream((chunk) => {
+        // Remove the "data: " tags and unnecessary whitespace from the chunk
+        // const cleanedChunk = removeDataTags(chunk);
+        // console.log(chunk);
+        if (chunk.includes("data:")) {
+          const cleanedChunk = chunk.split("data:")[1];
+          const parsedChunk = JSON.parse(cleanedChunk);
+          setHistoryId(parsedChunk.history_id);
+          setStreamInputImageUrl("")
+        } else {
+          // Update the response state by appending the cleaned chunk to the existing response
+          setResponse((prevResponse) => prevResponse + chunk);
+        }
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   async function handleSubmit() {
     if (user) {
@@ -93,10 +152,13 @@ export default function Create() {
             theme: user.brand_mode,
             colors: user.brand_colors,
             industry: user.brand_industry,
+            copy: user.brand_copy,
             staggered: true,
             alignment: "left",
           },
         };
+
+        console.log(payload.prompt)
 
         setInitialPrompt(payload);
         setResponse(""); // Clear the previous response
@@ -113,6 +175,7 @@ export default function Create() {
             const cleanedChunk = chunk.split("data:")[1];
             const parsedChunk = JSON.parse(cleanedChunk);
             setHistoryId(parsedChunk.history_id);
+            setPageId(parsedChunk.page_id);
           } else {
             console.log(chunk);
             // Update the response state by appending the cleaned chunk to the existing response
@@ -162,151 +225,24 @@ export default function Create() {
       {mode === "new" && (
         <div className={`${styles.New} ${showMode ? styles.fadeIn : ""}`}>
           {step === 1 ? (
-            <div className={styles.WhatNew}>
-              <div
-                onClick={() => handleCreateOptionSelect("Landing Page")}
-                className={styles.WhatNewOption}
-              >
-                <Typography fontWeight={600} variant="h5">
-                  Landing Page
-                </Typography>
-              </div>
-              <div className={styles.WhatNewOption}>
-                <Typography fontWeight={600} variant="h5">
-                  Web App
-                </Typography>
-              </div>
-              <div className={styles.WhatNewOption}>
-                <Typography fontWeight={600} variant="h5">
-                  Blog
-                </Typography>
-              </div>
-              <div className={styles.WhatNewOption}>
-                <Typography fontWeight={600} variant="h5">
-                  Video Streaming
-                </Typography>
-              </div>
-              <div className={styles.WhatNewOption}>
-                <Typography fontWeight={600} variant="h5">
-                  Social Media
-                </Typography>
-              </div>
-              <div className={styles.WhatNewOption}>
-                <Typography fontWeight={600} variant="h5">
-                  Something Else
-                </Typography>
-              </div>
-            </div>
+            <BuildOptions handleOptionSelect={handleCreateOptionSelect} />
           ) : step === 2 ? (
-            <div className={styles.Configs}>
-              {pricingCollapsed ? (
-                <KeyboardArrowDown
-                  onClick={handlePricingToggle}
-                  className={governor.CollapseIcon}
-                  sx={{ alignSelf: "end" }}
-                />
-              ) : (
-                <KeyboardArrowUp
-                  onClick={handlePricingToggle}
-                  className={governor.CollapseIcon}
-                  sx={{ alignSelf: "end" }}
-                />
-              )}
-              <div
-                style={
-                  pricingCollapsed ? { height: "30px", overflow: "hidden" } : {}
-                }
-                className={styles.Costs}
-              >
-                {pricingCollapsed ? null : (
-                  <>
-                    <div className={styles.CostsColumn}>
-                      <Typography variant="h5">Build Method</Typography>
-                      {config_options[createOption]?.prompt ? (
-                        <Typography
-                          alignSelf={"center"}
-                          padding={"0px"}
-                          fontSize={"75px"}
-                        >
-                          Prompt
-                        </Typography>
-                      ) : (
-                        <Typography
-                          alignSelf={"center"}
-                          padding={"0px"}
-                          fontSize={"75px"}
-                        >
-                          Low Code
-                        </Typography>
-                      )}
-                    </div>
-                    <Divider
-                      orientation="vertical"
-                      sx={{ color: "#f1f1f1", height: "180px" }}
-                      variant="middle"
-                    />
-                    <div className={styles.CostsColumn}>
-                      <Typography variant="h5">Iterations</Typography>
-                      <Typography
-                        alignSelf={"center"}
-                        padding={"0px"}
-                        fontSize={"75px"}
-                      >
-                        {config_options[createOption]?.costs?.iterations}
-                      </Typography>
-                    </div>
-                    <Divider
-                      orientation="vertical"
-                      sx={{ color: "#f1f1f1", height: "180px" }}
-                      variant="middle"
-                    />
-                    <div className={styles.CostsColumn}>
-                      <Typography variant="h5">Hosting</Typography>
-                      <Typography
-                        alignSelf={"center"}
-                        padding={"0px"}
-                        fontSize={"75px"}
-                      >
-                        {`$${(
-                          config_options[createOption]?.costs?.hosting / 100
-                        ).toFixed(2)}`}
-                      </Typography>
-                    </div>
-                    <Divider
-                      orientation="vertical"
-                      sx={{ color: "#f1f1f1", height: "180px" }}
-                      variant="middle"
-                    />
-                    <div className={styles.CostsColumn}>
-                      <Typography variant="h5">Restrictions</Typography>
-                      <Typography
-                        alignSelf={"center"}
-                        padding={"0px"}
-                        fontSize={"75px"}
-                      >
-                        {!config_options[createOption]?.costs?.restrictions
-                          ? "None"
-                          : "Yes"}
-                      </Typography>
-                    </div>
-                  </>
-                )}
-              </div>
-              <Typography>
-                We have pulled your profile configs in to make your{" "}
-                {createOption}
-              </Typography>
-              <button onClick={() => setNextStep(true)}>
-                Start Generating
-              </button>
-            </div>
+            <ConfigStep
+              option={createOption}
+              pricingCollapsed={pricingCollapsed}
+              toggle={handlePricingToggle}
+              setNextStep={setNextStep}
+            />
           ) : step === 3 ? (
-            <div className={styles.GeneratorContainer}>
-              <Typography variant="h5">Generating your {createOption} below</Typography>
-              <div className={styles.Generator}>
-                <GeneratedCodeContainerHTML htmlCode={response}/>
-              </div>
-            </div>
+            <Generator
+              type={createOption}
+              code={response}
+              handlePromptChange={handlePromptChange}
+              promptValue={reprompt}
+              setRetry={setRetry}
+              selectImage={handleImageSelect}
+              selectedImages={selectedImages}
+            />
           ) : null}
           {step === 1 ? (
             <button

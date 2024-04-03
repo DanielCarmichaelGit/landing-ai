@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import Header from './components/reusable/Header';
 import Profile from "./pages/profile";
 import Create from "./pages/create";
+import Hosting from "./pages/hosting";
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
@@ -45,6 +46,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/hosting" element={<Hosting />} />
       </Routes>
     </Provider>
   );

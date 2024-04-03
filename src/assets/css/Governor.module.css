@@ -32,6 +32,10 @@
   cursor: pointer;
 }
 
+.HoverIcon:hover {
+  cursor: pointer;
+}
+
 .Generator {
   display: flex;
   flex-direction: column;
