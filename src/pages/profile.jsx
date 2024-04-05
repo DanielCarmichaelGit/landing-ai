@@ -137,7 +137,7 @@ export default function Profile() {
       {makeChanges ? (
         <div onClick={(e) => handleModalTrigger(e)} className={styles.UpdateUserModalContainer}>
           <div className={styles.UpdateUserModal}>
-            <button onClick={(e) => handleModalTrigger(e)}>Cancel</button>
+            <button onClick={(e) => handleModalTrigger(e)}>Done</button>
             <PromptInput handleTextChange={handleBrandNameChange} label={"Brand Name"}/>
             <PromptInput handleTextChange={handleBrandIndustryChange} label={"Industry"}/>
             <PromptInput handleTextChange={handleBrandCopyChange} type="text-area" label={"Copy"}/>
@@ -160,7 +160,7 @@ export default function Profile() {
           Profile Configs
         </Typography>
         <div className={governor.ColumnSection}>
-          <button onClick={(e) => handleModalTrigger(e)}>Edit Profile Data</button>
+          <button style={{width: "fit-content", alignSelf: "end"}} onClick={(e) => handleModalTrigger(e)}>Edit Profile Data</button>
           <img className={styles.ProfileDetailsLogoImage} src={logoImageUrl} />
         </div>
         <div className={governor.RowSection}>

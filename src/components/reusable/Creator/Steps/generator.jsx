@@ -20,6 +20,11 @@ export default function Generator({
   selectImage,
   selectedImages,
   setRetry,
+  isComplete,
+  variant,
+  page,
+  setIsComplete,
+  setHTMLCode
 }) {
   const dispatch = useDispatch();
   const [optionsModal, setOptionsModal] = useState(false);
@@ -71,7 +76,7 @@ export default function Generator({
       </div>
       <div className={styles.Generator}>
         {type === "Landing Page" && code !== "" ? (
-          <GeneratedCodeContainerHTML htmlCode={code} />
+          <GeneratedCodeContainerHTML setHTMLCode={setHTMLCode} setIsComplete={setIsComplete} isComplete={isComplete} variant={variant} page={page} htmlCode={code} />
         ) : null}
       </div>
       {optionsModal && (

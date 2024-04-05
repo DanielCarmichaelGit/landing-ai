@@ -32,10 +32,14 @@ export default function Create() {
   const [initialPrompt, setInitialPrompt] = useState("");
   const [errorOccured, setErrorOccured] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
+
+  // console.log(response)
   
   // configs for subsequent requests
   const [historyId, setHistoryId] = useState("");
   const [pageId, setPageId] = useState("");
+  const [variantId, setVariantId] = useState("");
+  const [isComplete, setIsComplete] = useState(true);
 
   useEffect(() => {
     console.log(selectedImages)
@@ -105,15 +109,19 @@ export default function Create() {
       // Send the streamed input to the server for processing
       console.log("historyId: ", historyId.trim());
       const payload = {
-        prompt: reprompt + `RAG Resource Images: ${selectedImages.map((image) => image.hosted_url)}`,
+        prompt: "to the current page: " + reprompt + ` -- RAG Resource Images: ${selectedImages.map((image) => image.hosted_url)}`,
         html: response,
         initialPrompt,
         history_id: historyId,
         page_id: pageId
       };
 
+      console.log(payload);
+
       setReprompt(""); // Clear the streamed input field
       setResponse("");
+      setIsComplete(false);
+
       const token = JSON.parse(localStorage.getItem("user"))?.token || "";
 
       const { processStream } = await fetchWrapper(
@@ -128,10 +136,12 @@ export default function Create() {
         // const cleanedChunk = removeDataTags(chunk);
         // console.log(chunk);
         if (chunk.includes("data:")) {
+          setIsComplete(true);
           const cleanedChunk = chunk.split("data:")[1];
           const parsedChunk = JSON.parse(cleanedChunk);
           setHistoryId(parsedChunk.history_id);
-          setStreamInputImageUrl("")
+          setVariantId(parsedChunk.variant_id);
+          setPageId(parsedChunk.page_id);
         } else {
           // Update the response state by appending the cleaned chunk to the existing response
           setResponse((prevResponse) => prevResponse + chunk);
@@ -163,6 +173,7 @@ export default function Create() {
 
         setInitialPrompt(payload);
         setResponse(""); // Clear the previous response
+        setIsComplete(false)
 
         const { processStream } = await fetchWrapper(
           "/anthropic/landing-page/stream",
@@ -177,8 +188,8 @@ export default function Create() {
             const parsedChunk = JSON.parse(cleanedChunk);
             setHistoryId(parsedChunk.history_id);
             setPageId(parsedChunk.page_id);
+            setIsComplete(true);
           } else {
-            console.log(chunk);
             // Update the response state by appending the cleaned chunk to the existing response
             setResponse((prevResponse) => prevResponse + chunk);
           }
@@ -243,6 +254,11 @@ export default function Create() {
               setRetry={setRetry}
               selectImage={handleImageSelect}
               selectedImages={selectedImages}
+              variant={variantId}
+              page={pageId}
+              isComplete={isComplete}
+              setIsComplete={setIsComplete}
+              setHTMLCode={setResponse}
             />
           ) : null}
           {step === 1 ? (

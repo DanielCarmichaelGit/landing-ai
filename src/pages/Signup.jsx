@@ -32,6 +32,7 @@ export default function Signup({ setUser }) {
         if (response && response.user) {
           console.log("response", response);
           setUser({ ...response.user, token: response.token });
+          navigate("/dashboard")
         } else {
           setErrors({ email: "Email is already taken" });
         }
