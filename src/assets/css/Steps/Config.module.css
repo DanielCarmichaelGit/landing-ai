@@ -37,6 +37,7 @@
   align-self: center;
   height: fit-content;
   min-height: 400px;
+  overflow-y: scroll;
   justify-content: center;
   align-items: center;
   padding: 15px;
@@ -247,4 +248,58 @@
 .ColorInput::-moz-color-swatch {
   border-radius: 5px;
   border: none;
+}
+
+.ColorGroup {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+  row-gap: 10px;
+}
+
+.ColorCard {
+  height: 306px;
+  width: 220px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ColorRow {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  justify-content: space-between;
+  width: 100%;
+  column-gap: 10px;
+}
+
+.DarkModeButton:focus {
+  outline: none;
+}
+
+.LightModeButton:focus {
+  outline: none;
+}
+
+.ModeSelector {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+.DarkModeButton {
+  padding: 10px;
+  min-width: 150px;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+}
+
+.LightModeButton {
+  padding: 10px;
+  min-width: 150px;
+  border-radius: 5px;
+  background-color: white;
+  color: #333;
 }

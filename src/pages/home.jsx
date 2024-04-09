@@ -165,9 +165,7 @@ export default function Home() {
 
       processStream((chunk) => {
         if (chunk.includes("data:")) {
-          const cleanedChunk = chunk.split("data:")[1];
-          const parsedChunk = JSON.parse(cleanedChunk);
-          setHistoryId(parsedChunk.history_id);
+          console.log("done")
         } else {
           // Update the response state by appending the cleaned chunk to the existing response
           setResponse((prevResponse) => prevResponse + chunk);

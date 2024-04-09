@@ -1,196 +1,183 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduQuest - Online Learning Platform</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mortecai - AI-Powered Web Development</title>
     <style>
-        /* CSS Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 999;
-        }
-
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-        }
-
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 24px;
-            margin-bottom: 40px;
-        }
-
-        .hero button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        .featured-courses, .success-stories {
-            padding: 40px;
-        }
-
-        .course-card {
-            background-color: #f5f5f5;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .testimonial {
-            background-color: #f5f5f5;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        footer a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
-        footer button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #fff;
-            color: #333;
-            border: none;
-            cursor: pointer;
-            margin-top: 20px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #1a1a1a;
+        color: #fff;
+      }
+      header {
+        background-color: #4a90e2;
+        padding: 20px;
+        text-align: center;
+      }
+      h1 {
+        margin: 0;
+        font-size: 36px;
+      }
+      .hero {
+        background-color: #333;
+        padding: 100px 20px;
+        text-align: center;
+      }
+      .hero img {
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+      .hero p {
+        font-size: 24px;
+        margin-bottom: 40px;
+      }
+      .cta-button {
+        display: inline-block;
+        background-color: #b8e986;
+        color: #1a1a1a;
+        padding: 15px 30px;
+        text-decoration: none;
+        font-size: 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+      .cta-button:hover {
+        background-color: #9ad66f;
+      }
+      .features {
+        padding: 50px 20px;
+        text-align: center;
+      }
+      .feature {
+        display: inline-block;
+        width: 30%;
+        padding: 20px;
+        vertical-align: top;
+      }
+      .feature img {
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+      .feature p {
+        font-size: 18px;
+      }
+      .team {
+        padding: 50px 20px;
+        text-align: center;
+      }
+      .team-member {
+        display: inline-block;
+        width: 30%;
+        padding: 20px;
+        vertical-align: top;
+      }
+      .team-member img {
+        max-width: 100%;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
+      footer {
+        background-color: #4a90e2;
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+      }
     </style>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#">Math</a></li>
-                <li><a href="#">Science</a></li>
-                <li><a href="#">Languages</a></li>
-                <li><a href="#">Arts</a></li>
-                <li><input type="text" placeholder="Search"></li>
-            </ul>
-        </nav>
-    </header>
-
+  </head>
+  <body>
+    <header><h1>Mortecai</h1></header>
     <section class="hero">
-        <video src="placeholder-video.mp4" autoplay loop muted></video>
-        <h1>Welcome to EduQuest</h1>
-        <p id="tagline">Learn at your own pace</p>
-        <button>Get Started</button>
+      <img
+        src="http://grav-labs-5d2f91941bbb.herokuapp.com/uploads/1712397294421-example-2.svg"
+        alt="Mortecai Hero Image"
+      />
+      <p>
+        Experience the future of web development with Mortecai's innovative
+        AI-driven technology. Our platform harnesses the power of artificial
+        intelligence to transform your ideas into reality, allowing you to
+        create sophisticated digital experiences effortlessly. With Mortecai,
+        the possibilities are endless – design, build, and deploy your dream
+        projects with just a few prompts.
+      </p>
+      <a href="http://localhost:5173" class="cta-button">Get Started</a>
     </section>
-
-    <section class="featured-courses">
-        <h2>Featured Courses</h2>
-        <div class="course-card">
-            <img src="placeholder-course-image.jpg" alt="Course Image">
-            <h3>Course Title</h3>
-            <p>Instructor: John Doe</p>
-            <p>Course description goes here.</p>
-        </div>
-        <div class="course-card">
-            <img src="placeholder-course-image.jpg" alt="Course Image">
-            <h3>Course Title</h3>
-            <p>Instructor: Jane Smith</p>
-            <p>Course description goes here.</p>
-        </div>
+    <section class="features">
+      <div class="feature">
+        <img
+          src="http://grav-labs-5d2f91941bbb.herokuapp.com/uploads/1712397298304-undraw_Static_website_re_x70h.png"
+          alt="No-Code Solution"
+        />
+        <p>
+          Mortecai is a no-code solution that empowers you to build and deploy
+          complex web applications and landing pages without writing a single
+          line of code. Our intuitive platform leverages advanced AI algorithms
+          to translate your natural language prompts into functional, visually
+          stunning digital products. Say goodbye to the complexities of coding
+          and embrace the freedom of creating with Mortecai.
+        </p>
+      </div>
+      <div class="feature">
+        <img
+          src="http://grav-labs-5d2f91941bbb.herokuapp.com/uploads/1712397331629-example-2.svg"
+          alt="Unleash Creativity"
+        />
+        <p>
+          Unleash your creativity and bring your ideas to life with Mortecai's
+          AI-powered web development platform. Our cutting-edge technology
+          allows you to iterate and refine your projects seamlessly, ensuring
+          that every detail is perfected to your liking. With Mortecai, you have
+          the flexibility to craft truly unique digital experiences that
+          captivate and engage your audience.
+        </p>
+      </div>
+      <div class="feature">
+        <img
+          src="http://grav-labs-5d2f91941bbb.herokuapp.com/uploads/1712397418958-undraw_Design_inspiration_re_tftx.png"
+          alt="Stunning User Interfaces"
+        />
+        <p>
+          Mortecai bridges the gap between imagination and reality by
+          transforming your prompts into stunning user interfaces. Our AI-driven
+          platform takes your vision and translates it into visually compelling
+          and functional designs, ensuring that your digital products not only
+          look remarkable but also deliver an exceptional user experience.
+        </p>
+      </div>
     </section>
-
-    <section class="success-stories">
-        <h2>Success Stories</h2>
-        <div class="testimonial">
-            <p>"EduQuest helped me learn a new skill and advance my career. Highly recommended!"</p>
-            <p>- John Doe</p>
-        </div>
-        <div class="testimonial">
-            <p>"I never thought I could learn a new language online, but EduQuest made it possible. Thank you!"</p>
-            <p>- Jane Smith</p>
-        </div>
+    <section class="team">
+      <div class="team-member">
+        <img
+          src="http://grav-labs-5d2f91941bbb.herokuapp.com/uploads/1712397430113-Brandon.jpeg"
+          alt="Brandon Mikowski"
+        />
+        <p>
+          Meet Brandon Mikowski, a talented frontend developer at Mortecai with
+          a passion for building lean and efficient products for startups.
+          Brandon's expertise lies in crafting intuitive user interfaces that
+          enhance the overall user experience. His dedication to creating
+          seamless and engaging digital products is a driving force behind
+          Mortecai's success.
+        </p>
+      </div>
+      <div class="team-member">
+        <img
+          src="http://grav-labs-5d2f91941bbb.herokuapp.com/uploads/1712397497806-daniel.png"
+          alt="Daniel Carmichael"
+        />
+        <p>
+          Introducing Daniel Carmichael, a full-stack developer at Mortecai with
+          a knack for product development and complex integrations. Daniel's
+          user-centric approach ensures that every digital experience crafted by
+          Mortecai is tailored to the needs and preferences of its users. His
+          ability to seamlessly integrate diverse technologies and
+          functionalities is a key factor in delivering truly exceptional web
+          applications.
+        </p>
+      </div>
     </section>
-
-    <footer>
-        <a href="#">Blog</a>
-        <a href="#">FAQ</a>
-        <a href="#">Privacy Policy</a>
-        <button>Contact Us</button>
-    </footer>
-
-    <script>
-        // JavaScript Code
-        const taglines = [
-            "Learn at your own pace",
-            "Discover new passions",
-            "Expand your horizons"
-        ];
-
-        let index = 0;
-        const taglineElement = document.getElementById("tagline");
-
-        function rotateTagline() {
-            taglineElement.textContent = taglines[index];
-            index = (index + 1) % taglines.length;
-        }
-
-        setInterval(rotateTagline, 3000);
-    </script>
-</body>
+    <footer>&copy; 2023 Mortecai. All rights reserved.</footer>
+  </body>
 </html>
-```

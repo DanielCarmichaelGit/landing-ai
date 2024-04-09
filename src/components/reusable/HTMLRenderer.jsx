@@ -150,7 +150,7 @@ const GeneratedCodeContainerHTML = ({
 
   return (
     <div style={{ display: "flex", height: "100%" }}>
-      <div
+      {/* <div
         style={{
           display: "flex",
           flexDirection: "column",
@@ -180,15 +180,15 @@ const GeneratedCodeContainerHTML = ({
                   <h4>Colors:</h4>
                   {/* Add color selectors */}
                   {/* Add other necessary fields */}
-                </div>
+                {/* </div>
               )}
             </div>
             <div>
               <h3 style={{backgroundColor: "#222", borderRadius: "5px", padding: "10px", margin: "0px"}} onClick={() => toggleDropdown("header")}>Header</h3>
               {openDropdown === "header" && (
-                <div>
+                <div> */}
                   {/* Add header styles */}
-                  <h4>Header Elements:</h4>
+                  {/* <h4>Header Elements:</h4>
                   {groupedElements.header &&
                     Object.entries(groupedElements.header).map(([position, elements]) => (
                       <div key={position}>
@@ -217,9 +217,9 @@ const GeneratedCodeContainerHTML = ({
             <div>
               <h3 style={{backgroundColor: "#222", borderRadius: "5px", padding: "10px", margin: "0px"}} onClick={() => toggleDropdown("main")}>Main</h3>
               {openDropdown === "main" && (
-                <div>
+                <div> */}
                   {/* Add main styles */}
-                  <h4>Main Elements:</h4>
+                  {/* <h4>Main Elements:</h4>
                   {groupedElements.main &&
                     Object.entries(groupedElements.main).map(([position, elements]) => (
                       <div key={position}>
@@ -248,9 +248,9 @@ const GeneratedCodeContainerHTML = ({
             <div>
               <h3 style={{backgroundColor: "#222", borderRadius: "5px", padding: "10px", margin: "0px"}} onClick={() => toggleDropdown("footer")}>Footer</h3>
               {openDropdown === "footer" && (
-                <div>
+                <div> */}
                   {/* Add footer styles */}
-                  <h4>Footer Elements:</h4>
+                  {/* <h4>Footer Elements:</h4>
                   {groupedElements.footer &&
                     Object.entries(groupedElements.footer).map(([position, elements]) => (
                       <div key={position}>
@@ -298,11 +298,11 @@ const GeneratedCodeContainerHTML = ({
             )}
           </>
         )}
-      </div>
+      </div> */}
       <iframe
         ref={iframeRef}
         title="Generated Code Container"
-        style={{ flex: 1, border: "none", maxHeight: "100%" }}
+        style={{ flex: 1, border: "none", minHeight: "600px" }}
       />
     </div>
   );

@@ -14,6 +14,20 @@ export function deleteBrandImage(image) {
   }
 }
 
+export function addLandingCopyPayload(payload) {
+  return {
+    type: "ADD_LANDING_COPY",
+    payload
+  }
+}
+
+export function addGenerationPayload(payload) {
+  return {
+    type: "ADD_LANDING_DATA",
+    payload
+  }
+}
+
 export function getUser() {
   return async function (dispatch) {
     try {

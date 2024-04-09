@@ -1,8 +1,8 @@
 import styles from "../../assets/css/Input.module.css";
 
-export default function PromptInput({label, type = "text", handleTextChange, textValue, customStyles = {}}) {
+export default function PromptInput({label, type = "text", handleTextChange, textValue, customStyles = {}, customGroupStyle = {}}) {
   return (
-    <div className={styles.PromptInputGroup}>
+    <div style={customGroupStyle} className={styles.PromptInputGroup}>
       <label className={styles.PromptLabel}>{label}</label>
       {
         type !== "text-area" ? (

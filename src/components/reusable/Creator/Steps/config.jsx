@@ -2,23 +2,112 @@ import styles from "../../../../assets/css/Steps/Config.module.css";
 import governor from "../../../../assets/css/Governor.module.css";
 import Typography from "@mui/material/Typography";
 import ImageUploader from "../../../features/ImageUploader";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PromptInput from "../../Input";
 
 import CheckIcon from "@mui/icons-material/Check";
-import ColorPicker from '../../ColorPicker';
+import ColorPicker from "../../ColorPicker";
+import { useDispatch } from 'react-redux';
+import { addGenerationPayload, addLandingCopyPayload } from "../../../../State-Management/actions";
 
 export default function ConfigStep({ setNextStep }) {
+  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [brandName, setBrandName] = useState("");
   const [brandDescription, setBrandDescription] = useState("");
   const [brandImages, setBrandImages] = useState([]);
-  const [logoImage, setLogoImage] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [imageConfigs, setImageConfigs] = useState([]);
+  const [primary, setPrimary] = useState("#f1f1f1");
+  const [secondary, setSecondary] = useState("#f1f1f1");
+  const [tertiary, setTertiary] = useState("#f1f1f1");
+  const [mode, setMode] = useState("dark");
+  const [selectedColor, setSelectedColor] = useState("Primary");
+  const [baseUrl, setBaseUrl] = useState("");
+
+  useEffect(() => {
+    console.log(step)
+    if (step === 5) {
+      const landing_copy = {
+        brand_name: brandName,
+        brand_description: brandDescription,
+        brand_images: imageConfigs
+      };
+
+      const landing_data = {
+        brand_name: brandName,
+        brand_description: brandDescription,
+        brand_colors: {
+          primary,
+          secondary,
+          tertiary
+        },
+        theme_mode: mode,
+        base_url: baseUrl
+      };
+
+      dispatch(addGenerationPayload(landing_data));
+      dispatch(addLandingCopyPayload(landing_copy));
+
+      setNextStep(true)
+    }
+  }, [step]);
+
+  useEffect(() => {
+    if (step) {
+      const payload = {
+        brand_name: brandName,
+        brand_description: brandDescription,
+        brand_images: [...brandImages],
+        image_configs: [...imageConfigs],
+        brand_colors: {
+          primary,
+          secondary,
+          tertiary,
+        },
+        theme_mode: mode,
+        base_url: baseUrl,
+      };
+
+      console.log(payload);
+    }
+  }, [step]);
+
+  function selectMode(mode) {
+    setMode(mode);
+  }
 
   function handleBrandNameChange(value) {
     setBrandName(value);
+  }
+
+  function handleBaseURLChnage(value) {
+    setBaseUrl(value);
+  }
+
+  function handleColorSelect(color) {
+    setSelectedColor(color);
+  }
+
+  function handleColorChange(value) {
+    if (selectedColor === "Primary") {
+      setPrimary(value.hex);
+    } else if (selectedColor === "Secondary") {
+      setSecondary(value.hex);
+    } else if (selectedColor === "Tertiary") {
+      setTertiary(value.hex);
+    }
+  }
+
+  function getSelectedColor() {
+    const color = selectedColor;
+    if (color === "Primary") {
+      return primary;
+    } else if (color === "Secondary") {
+      return secondary;
+    } else if (color === "Tertiary") {
+      return tertiary;
+    }
   }
 
   function handleBrandDescriptionChange(value) {
@@ -243,7 +332,56 @@ export default function ConfigStep({ setNextStep }) {
           </div>
         ) : step === 4 ? (
           <div className={styles.DesignChoices}>
-            <ColorPicker />
+            <div className={styles.ModeSelector}>
+              <button
+                onClick={() => selectMode("dark")}
+                style={mode === "dark" ? { border: "2px solid white" } : {}}
+                className={styles.DarkModeButton}
+              >
+                Dark Mode
+              </button>
+              <button
+                onClick={() => selectMode("light")}
+                style={mode === "light" ? { border: "2px solid white" } : {}}
+                className={styles.LightModeButton}
+              >
+                Light Mode
+              </button>
+            </div>
+            <div className={styles.ColorRow}>
+              <div className={styles.ColorGroup}>
+                <div
+                  onClick={() => handleColorSelect("Primary")}
+                  style={{ backgroundColor: `${primary}` }}
+                  className={styles.ColorCard}
+                />
+              </div>
+              <div className={styles.ColorGroup}>
+                <div
+                  onClick={() => handleColorSelect("Secondary")}
+                  style={{ backgroundColor: `${secondary}` }}
+                  className={styles.ColorCard}
+                />
+              </div>
+              <div className={styles.ColorGroup}>
+                <div
+                  onClick={() => handleColorSelect("Tertiary")}
+                  style={{ backgroundColor: `${tertiary}` }}
+                  className={styles.ColorCard}
+                />
+              </div>
+              <ColorPicker
+                selectColor={handleColorChange}
+                color={getSelectedColor()}
+              />
+            </div>
+            <PromptInput
+              customGroupStyle={{ width: "100%" }}
+              customStyles={{ maxWidth: "600px" }}
+              label={"Base Website URL"}
+              textValue={baseUrl}
+              handleTextChange={handleBaseURLChnage}
+            />
           </div>
         ) : null}
         <div className={styles.ButtonRow}>
@@ -260,7 +398,7 @@ export default function ConfigStep({ setNextStep }) {
                 : false
             }
           >
-            Next
+            {step === 4 ? "Generate" : "Next"}
           </button>
           {step > 1 ? (
             <button

@@ -5,7 +5,9 @@ const initialState = {
   user: null,
   brand_images: null,
   brand_pages: null,
-  brand_threads: null
+  brand_threads: null,
+  landing_copy: null,
+  landing_data: null
 };
 
 function appReducer(state = initialState, action) {
@@ -42,6 +44,18 @@ function appReducer(state = initialState, action) {
       return {
         ...state,
         brand_pages: action.payload
+      }
+    }
+    case "ADD_LANDING_COPY": {
+      return {
+        ...state,
+        landing_copy: action.payload
+      }
+    }
+    case "ADD_LANDING_DATA": {
+      return {
+        ...state,
+        landing_data: action.payload
       }
     }
     case "SET_THREADS": {

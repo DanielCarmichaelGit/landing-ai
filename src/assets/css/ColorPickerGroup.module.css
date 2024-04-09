@@ -9,22 +9,6 @@
   row-gap: 10px;
 }
 
-.DarkModeButton {
-  padding: 10px;
-  min-width: 150px;
-  border-radius: 5px;
-  background-color: #333;
-  color: white;
-}
-
-.LightModeButton {
-  padding: 10px;
-  min-width: 150px;
-  border-radius: 5px;
-  background-color: white;
-  color: #333;
-}
-
 .ColorPickers {
   display: flex;
   flex-direction: row;
@@ -33,18 +17,4 @@
   column-gap: 10px;
   overflow-x: scroll;
   height: fit-content;
-}
-
-.DarkModeButton:focus {
-  outline: none;
-}
-
-.LightModeButton:focus {
-  outline: none;
-}
-
-.ModeSelector {
-  display: flex;
-  flex-direction: row;
-  column-gap: 10px;
 }

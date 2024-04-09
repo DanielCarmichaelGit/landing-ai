@@ -15,6 +15,7 @@ import { getUser } from "../State-Management/actions";
 import ConfigStep from "../components/reusable/Creator/Steps/config";
 import Generator from "../components/reusable/Creator/Steps/generator";
 import BuildOptions from "../components/reusable/Creator/Steps/buildOptions";
+import GenerationStep from "../components/reusable/Creator/Steps/generationSteps";
 
 export default function Create() {
   const dispatch = useDispatch();
@@ -246,19 +247,8 @@ export default function Create() {
               setNextStep={setNextStep}
             />
           ) : step === 3 ? (
-            <Generator
-              type={createOption}
-              code={response}
-              handlePromptChange={handlePromptChange}
-              promptValue={reprompt}
-              setRetry={setRetry}
-              selectImage={handleImageSelect}
-              selectedImages={selectedImages}
-              variant={variantId}
-              page={pageId}
-              isComplete={isComplete}
-              setIsComplete={setIsComplete}
-              setHTMLCode={setResponse}
+            <GenerationStep
+              setNextStep={setNextStep}
             />
           ) : null}
           {step === 1 ? (
